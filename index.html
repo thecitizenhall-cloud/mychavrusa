@@ -155,6 +155,22 @@ body{font-family:'DM Sans',sans-serif;background:#ffffff;color:#1a1a1a;min-heigh
 .referral-share{display:flex;gap:7px;flex-wrap:wrap}
 .referral-share a,.referral-share button{flex:1;min-width:90px;text-align:center;padding:8px 12px;font-size:12.5px;font-weight:500;font-family:'DM Sans',sans-serif;text-decoration:none;border:1px solid #ddd;border-radius:8px;background:#fff;color:#185FA5;cursor:pointer;transition:all 0.15s}
 .referral-share a:hover,.referral-share button:hover{background:#E6F1FB;border-color:#378ADD}
+.share-tab{position:fixed;right:1rem;bottom:1rem;z-index:60;display:flex;flex-direction:column;align-items:flex-end;gap:0.6rem}
+.share-btn{display:flex;align-items:center;gap:7px;padding:10px 16px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;background:#185FA5;color:#E6F1FB;border:none;border-radius:24px;cursor:pointer;box-shadow:0 4px 14px rgba(24,95,165,0.28);transition:background 0.15s}
+.share-btn:hover{background:#0C447C}
+.share-btn-icon{font-size:14px;line-height:1}
+.share-pop{display:none;width:270px;background:#fff;border:1px solid #e2e2e0;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.14);padding:1rem}
+.share-pop.open{display:block}
+.share-pop-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:500;color:#1a1a1a;margin-bottom:3px}
+.share-pop-sub{font-size:11.5px;font-weight:300;color:#666;line-height:1.5;margin-bottom:0.8rem}
+.share-pop-row{display:flex;gap:6px;margin-bottom:0.6rem}
+.share-pop-row input{flex:1;min-width:0;padding:8px 10px;font-size:11.5px;font-family:'DM Sans',sans-serif;border:1px solid #ddd;border-radius:7px;background:#fff;color:#444;outline:none;overflow:hidden;text-overflow:ellipsis}
+#tab-copy{flex:0 0 auto;padding:8px 12px;font-size:11.5px;font-weight:500;font-family:'DM Sans',sans-serif;background:#185FA5;color:#E6F1FB;border:none;border-radius:7px;cursor:pointer}
+#tab-copy:hover{background:#0C447C}
+.share-pop-actions{display:flex;gap:6px}
+.share-pop-actions a{flex:1;text-align:center;padding:7px;font-size:11.5px;font-weight:500;font-family:'DM Sans',sans-serif;text-decoration:none;border:1px solid #ddd;border-radius:7px;background:#fff;color:#185FA5;cursor:pointer}
+.share-pop-actions a:hover{background:#E6F1FB;border-color:#378ADD}
+@media(max-width:480px){.share-btn-label{display:none}.share-btn{padding:12px;border-radius:50%}.share-pop{width:240px}}
 .divider{height:1px;background:#e8e8e8;max-width:520px;margin:0 auto 2rem}
 .how{max-width:560px;margin:0 auto;padding:0 2rem 1.5rem}
 .section-label{font-size:11px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:#999;text-align:center;margin-bottom:1.5rem}
@@ -401,6 +417,24 @@ body{font-family:'DM Sans',sans-serif;background:#ffffff;color:#1a1a1a;min-heigh
   <a href="/privacy.html" style="color:#999;margin:0 0.5rem">Privacy Policy</a>
 </footer>
 
+<div class="share-tab" id="share-tab">
+  <div class="share-pop" id="share-pop">
+    <p class="share-pop-title">Invite a friend</p>
+    <p class="share-pop-sub">Every serious learner you bring makes matches faster — including yours.</p>
+    <div class="share-pop-row">
+      <input type="text" id="tab-link" readonly onclick="this.select()" />
+      <button id="tab-copy" onclick="copyTabLink()">Copy</button>
+    </div>
+    <div class="share-pop-actions">
+      <a id="tab-wa" target="_blank" rel="noopener">WhatsApp</a>
+      <a id="tab-email">Email</a>
+    </div>
+  </div>
+  <button class="share-btn" id="share-btn" onclick="toggleShareTab()" aria-label="Invite a friend">
+    <span class="share-btn-icon">🔗</span><span class="share-btn-label">Invite</span>
+  </button>
+</div>
+
 <script>
 var ENDPOINT = 'https://formspree.io/f/mpqkoobr';
 var SITE = 'https://thechavrusaplatform.com/';
@@ -422,7 +456,9 @@ function makeCode(email) {
 }
 
 function showReferral(email) {
-  var link = SITE + '?ref=' + makeCode(email);
+  var code = makeCode(email);
+  try { localStorage.setItem('tcp_ref', code); } catch (e) {}
+  var link = SITE + '?ref=' + code;
   document.getElementById('ref-link').value = link;
   var msg = "I just joined The Chavrusa Platform — it matches you with a chavrusa by schedule, subject, pace, and learning style. Thought you'd want in: " + link;
   document.getElementById('share-wa').href = 'https://wa.me/?text=' + encodeURIComponent(msg);
@@ -450,6 +486,41 @@ function nativeShare() {
     text: 'I just joined The Chavrusa Platform — thought you\'d want in:',
     url: link
   }).catch(function(){});
+}
+
+// Floating "Invite" tab — uses this browser's saved invite code if the person
+// has signed up before, otherwise shares the plain site link.
+function shareLink() {
+  var code = '';
+  try { code = localStorage.getItem('tcp_ref') || ''; } catch (e) {}
+  return code ? SITE + '?ref=' + code : SITE;
+}
+
+function initShareTab() {
+  var link = shareLink();
+  document.getElementById('tab-link').value = link;
+  var msg = 'Check out The Chavrusa Platform — it matches you with a chavrusa by schedule, subject, pace, and learning style: ' + link;
+  document.getElementById('tab-wa').href = 'https://wa.me/?text=' + encodeURIComponent(msg);
+  document.getElementById('tab-email').href = 'mailto:?subject=' + encodeURIComponent('A better way to find a chavrusa') + '&body=' + encodeURIComponent(msg);
+}
+
+function toggleShareTab() {
+  var pop = document.getElementById('share-pop');
+  if (!pop.classList.contains('open')) initShareTab();
+  pop.classList.toggle('open');
+}
+
+function copyTabLink() {
+  var input = document.getElementById('tab-link');
+  var btn = document.getElementById('tab-copy');
+  input.select();
+  input.setSelectionRange(0, 99999);
+  function done() { btn.textContent = 'Copied ✓'; setTimeout(function(){ btn.textContent = 'Copy'; }, 2000); }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(input.value).then(done, function(){ try { document.execCommand('copy'); done(); } catch(e){} });
+  } else {
+    try { document.execCommand('copy'); done(); } catch(e){}
+  }
 }
 
 function goNext(step) {
