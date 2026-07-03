@@ -17,22 +17,87 @@
 <meta property="og:image" content="https://thechavrusaplatform.com/og-image.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="The Chavrusa Platform — find a chavrusa that actually fits" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="The Chavrusa Platform — Find a chavrusa that actually fits" />
 <meta name="twitter:description" content="A smarter way for working professionals to find reliable, compatible chavrusas — matched by schedule, subject, pace, and learning style." />
 <meta name="twitter:image" content="https://thechavrusaplatform.com/og-image.png" />
+<meta name="twitter:image:alt" content="The Chavrusa Platform — find a chavrusa that actually fits" />
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "The Chavrusa Platform",
-  "url": "https://thechavrusaplatform.com/",
-  "description": "A matching service that pairs working professionals with compatible chavrusas by schedule, subject, pace, and learning style."
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://thechavrusaplatform.com/#organization",
+      "name": "The Chavrusa Platform",
+      "url": "https://thechavrusaplatform.com/",
+      "logo": "https://thechavrusaplatform.com/og-image.png",
+      "description": "A matching service that pairs working professionals with compatible chavrusas by schedule, subject, pace, and learning style."
+    },
+    {
+      "@type": "Service",
+      "@id": "https://thechavrusaplatform.com/#service",
+      "name": "Chavrusa matching",
+      "serviceType": "Learning-partner matching",
+      "provider": { "@id": "https://thechavrusaplatform.com/#organization" },
+      "areaServed": "US",
+      "audience": { "@type": "Audience", "audienceType": "Working professionals" },
+      "description": "Pairs working professionals with compatible chavrusas (Torah learning partners), matched by schedule, subject, pace, and learning style."
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is The Chavrusa Platform?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It's a matching service that pairs working professionals with compatible chavrusas (Torah learning partners), matched by schedule, subject, pace, and learning style — not just whoever happens to be available."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the matching work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You fill out a short adaptive intake covering your schedule, subject, session length, pace, style, and intensity. We look for compatibility across all of those and reach out when there's a genuine fit — with a clear explanation of why."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who is it for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Working professionals who want a reliable, compatible chavrusa but struggle to find one that fits their schedule, level, and learning style."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What can I learn?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gemara (iyun or bekius), Halacha, Chumash with mefarshim, Mussar, Nach, and more. You can also name a specific masechta or topic during intake."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long until I'm matched?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our first cohort is still small, so it isn't always immediate. We won't pair you with someone just to fill a spot — we add new learners continuously and reach out the moment there's a real fit."
+          }
+        }
+      ]
+    }
+  ]
 }
 </script>
 
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -90,6 +155,13 @@ body{font-family:'DM Sans',sans-serif;background:#ffffff;color:#1a1a1a;min-heigh
 .step-num{width:26px;height:26px;border-radius:50%;background:#E6F1FB;color:#185FA5;font-size:12px;font-weight:500;display:flex;align-items:center;justify-content:center;margin:0 auto 8px}
 .step-title{font-size:12px;font-weight:500;color:#1a1a1a;margin-bottom:5px}
 .step-desc{font-size:11px;font-weight:300;line-height:1.6;color:#666}
+.faq{max-width:560px;margin:0 auto;padding:0 2rem 1rem}
+.faq-item{border:1px solid #e8e8e8;border-radius:12px;background:#f7f7f5;margin-bottom:0.6rem;overflow:hidden}
+.faq-item summary{list-style:none;cursor:pointer;padding:0.95rem 1.1rem;font-size:13.5px;font-weight:500;color:#1a1a1a;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:'+';color:#185FA5;font-size:18px;font-weight:400;line-height:1;flex:0 0 auto}
+.faq-item[open] summary::after{content:'–'}
+.faq-answer{padding:0 1.1rem 1.05rem;font-size:13px;font-weight:300;line-height:1.7;color:#555}
 .trust{text-align:center;padding:1.5rem 2rem 2.5rem}
 .trust-line{font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:#888;max-width:380px;margin:0 auto;line-height:1.7}
 @media(max-width:480px){
@@ -285,6 +357,32 @@ body{font-family:'DM Sans',sans-serif;background:#ffffff;color:#1a1a1a;min-heigh
     </div>
   </div>
 </div>
+
+<div class="divider"></div>
+
+<section class="faq">
+  <h2 class="section-label">Common questions</h2>
+  <details class="faq-item">
+    <summary>What is The Chavrusa Platform?</summary>
+    <div class="faq-answer">It's a matching service that pairs working professionals with compatible chavrusas (Torah learning partners), matched by schedule, subject, pace, and learning style — not just whoever happens to be available.</div>
+  </details>
+  <details class="faq-item">
+    <summary>How does the matching work?</summary>
+    <div class="faq-answer">You fill out a short adaptive intake covering your schedule, subject, session length, pace, style, and intensity. We look for compatibility across all of those and reach out when there's a genuine fit — with a clear explanation of why.</div>
+  </details>
+  <details class="faq-item">
+    <summary>Who is it for?</summary>
+    <div class="faq-answer">Working professionals who want a reliable, compatible chavrusa but struggle to find one that fits their schedule, level, and learning style.</div>
+  </details>
+  <details class="faq-item">
+    <summary>What can I learn?</summary>
+    <div class="faq-answer">Gemara (iyun or bekius), Halacha, Chumash with mefarshim, Mussar, Nach, and more. You can also name a specific masechta or topic during intake.</div>
+  </details>
+  <details class="faq-item">
+    <summary>How long until I'm matched?</summary>
+    <div class="faq-answer">Our first cohort is still small, so it isn't always immediate. We won't pair you with someone just to fill a spot — we add new learners continuously and reach out the moment there's a real fit.</div>
+  </details>
+</section>
 
 <footer style="text-align:center;padding:1.5rem 2rem 2.5rem;font-size:12px;color:#999">
   <a href="/terms.html" style="color:#999;margin:0 0.5rem">Terms of Service</a>
